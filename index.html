@@ -1,0 +1,388 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>Kelurahan Munjul – Majalengka</title>
+<meta name="description" content="Website informasi publik Kelurahan Munjul, Kecamatan Majalengka. Profil, data RW, UMKM, kegiatan, dan kontak."/>
+<style>
+  :root{
+    --bg:#0e0f12;
+    --muted:#9aa4af;
+    --brand:#22c55e; /* hijau segar */
+    --brand-2:#16a34a;
+    --card:#15171c;
+    --text:#e8eef5;
+    --text-2:#c8d0d8;
+    --ring:rgba(34,197,94,.35);
+    --shadow:0 10px 30px rgba(0,0,0,.35);
+    --radius:16px;
+  }
+  *{box-sizing:border-box}
+  html,body{margin:0;background:var(--bg);color:var(--text);font:16px/1.6 system-ui,-apple-system,"Segoe UI",Roboto,Inter,"Helvetica Neue",Arial}
+  a{color:inherit}
+  /* NAVBAR */
+  .nav{
+    position:fixed;inset:0 0 auto 0;height:64px;display:flex;align-items:center;z-index:50;
+    backdrop-filter:saturate(140%) blur(8px);
+    background:linear-gradient(to bottom,rgba(14,15,18,.92),rgba(14,15,18,.55));
+    border-bottom:1px solid rgba(255,255,255,.06);
+  }
+  .container{width:min(1150px,92%);margin:0 auto}
+  .nav .wrap{display:flex;align-items:center;justify-content:space-between}
+  .brand{display:flex;gap:.6rem;align-items:center;font-weight:700;letter-spacing:.2px}
+  .brand .logo{width:30px;height:30px;display:grid;place-items:center;border-radius:10px;background:linear-gradient(135deg,var(--brand),#86efac)}
+  .nav ul{list-style:none;display:flex;gap:1.2rem;margin:0;padding:0}
+  .nav a.item{padding:.45rem .6rem;border-radius:10px;color:var(--text-2);text-decoration:none}
+  .nav a.item.active,.nav a.item:hover{color:var(--text);background:rgba(255,255,255,.06)}
+  .nav .actions{display:flex;gap:.6rem;align-items:center}
+  .btn{border:1px solid rgba(255,255,255,.12);background:transparent;color:var(--text);padding:.5rem .9rem;border-radius:12px;cursor:pointer}
+  .btn.brand{border-color:transparent;background:linear-gradient(180deg,var(--brand),var(--brand-2));color:#06250f;font-weight:700}
+  .hamb{display:none}
+  @media (max-width:860px){
+    .nav ul{display:none}
+    .hamb{display:block;border:0;background:transparent;color:var(--text);font-size:1.4rem}
+  }
+  /* HERO */
+  .hero{
+    min-height:78vh;display:grid;place-items:center;text-align:center;padding-top:64px;position:relative;overflow:hidden
+  }
+  .hero::before{
+    content:"";position:absolute;inset:0;
+    background:
+      linear-gradient(to bottom,rgba(14,15,18,.75),rgba(14,15,18,.75)),
+      url('https://images.unsplash.com/photo-1606229365485-93a59908d4a1?q=80&w=1900&auto=format&fit=crop') center/cover no-repeat;
+    filter:grayscale(100%);
+    z-index:-1
+  }
+  .hero h1{font-size:clamp(2.2rem,6vw,4.5rem);font-weight:800;letter-spacing:.4px;margin:0 0 .5rem}
+  .hero p{color:var(--text-2);max-width:820px;margin:0 auto 1.3rem}
+  .searchbar{display:flex;gap:.5rem;background:#fff1;border:1px solid #ffffff33;border-radius:999px;padding:.35rem .35rem;backdrop-filter:blur(6px);width:min(760px,92%);margin:1rem auto 0}
+  .searchbar input{
+    flex:1;background:transparent;border:0;outline:0;color:#fff;padding:.8rem 1rem;font-size:1.05rem
+  }
+  .searchbar input::placeholder{color:#cfd6de}
+  .searchbar button{background:var(--brand);border:0;color:#06250f;font-weight:700;padding:.8rem 1.1rem;border-radius:999px;cursor:pointer}
+  .hint{font-size:.9rem;color:var(--muted)}
+  /* SECTIONS */
+  section{padding:64px 0}
+  .title{font-size:1.8rem;margin:0 0 .8rem}
+  .muted{color:var(--muted)}
+  .grid{display:grid;gap:18px}
+  .grid.cards{grid-template-columns:repeat(12,1fr)}
+  .card{
+    background:linear-gradient(180deg,#16181e,#121318);border:1px solid rgba(255,255,255,.06);
+    border-radius:var(--radius);padding:18px;box-shadow:var(--shadow)
+  }
+  .rw{grid-column:span 4}
+  @media(max-width:980px){.rw{grid-column:span 6}}
+  @media(max-width:640px){.rw{grid-column:span 12}}
+  .card h3{margin:.2rem 0 .35rem;font-size:1.15rem}
+  .tag{display:inline-flex;gap:.4rem;align-items:center;background:#1a1e24;border:1px solid #2b303a;padding:.15rem .5rem;border-radius:999px;color:#cfe9d7;font-size:.8rem}
+  .kp{display:grid;grid-template-columns:repeat(3,1fr);gap:18px}
+  @media(max-width:860px){.kp{grid-template-columns:1fr}}
+  .list{margin:.6rem 0 0;padding-left:1.1rem}
+  .list li{margin:.25rem 0}
+  /* CONTACT + FORM */
+  form{display:grid;gap:12px}
+  .field{display:grid}
+  .field input,.field textarea{
+    background:#0f1116;border:1px solid #23262e;color:var(--text);padding:.8rem 1rem;border-radius:12px;outline:2px solid transparent
+  }
+  .field input:focus,.field textarea:focus{outline-color:var(--ring);border-color:var(--brand)}
+  .btn.full{width:100%;padding:1rem;border-radius:12px}
+  /* FOOTER */
+  footer{padding:32px 0;border-top:1px solid rgba(255,255,255,.06);color:var(--muted)}
+  /* MODAL */
+  .modal{position:fixed;inset:0;display:none;place-items:center;background:rgba(0,0,0,.55);z-index:60}
+  .modal.open{display:grid}
+  .modal .panel{width:min(520px,92%);background:#0f1116;border:1px solid #23262e;border-radius:16px;box-shadow:var(--shadow);padding:22px}
+  .panel h3{margin:.2rem 0 1rem}
+  .close{float:right;border:0;background:transparent;color:var(--muted);font-size:1.6rem;cursor:pointer}
+  /* SKIP LINK for accessibility */
+  .skip{position:absolute;left:-9999px;top:auto;width:1px;height:1px;overflow:hidden}
+  .skip:focus{left:12px;top:72px;width:auto;height:auto;padding:.5rem .8rem;background:#111;border:1px solid #333;border-radius:10px}
+</style>
+</head>
+<body>
+<a href="#main" class="skip">Lewati ke konten utama</a>
+
+<!-- NAV -->
+<nav class="nav" aria-label="Navigasi utama">
+  <div class="container wrap">
+    <div class="brand" aria-label="Beranda">
+      <span class="logo" aria-hidden="true">🌿</span>
+      <span>Kelurahan Munjul</span>
+    </div>
+    <button class="hamb" id="hamb" aria-label="Buka menu">☰</button>
+    <ul id="menu" role="menubar" aria-label="Menu">
+      <li role="none"><a role="menuitem" class="item active" href="#home">Beranda</a></li>
+      <li role="none"><a role="menuitem" class="item" href="#profil">Profil</a></li>
+      <li role="none"><a role="menuitem" class="item" href="#rw">Data RW</a></li>
+      <li role="none"><a role="menuitem" class="item" href="#kegiatan">Kegiatan</a></li>
+      <li role="none"><a role="menuitem" class="item" href="#umkm">UMKM</a></li>
+      <li role="none"><a role="menuitem" class="item" href="#kontak">Kontak</a></li>
+    </ul>
+    <div class="actions">
+      <button class="btn" data-open="login">Log in</button>
+      <button class="btn brand" data-open="daftar">Daftar UMKM</button>
+    </div>
+  </div>
+</nav>
+
+<!-- HERO -->
+<header id="home" class="hero" role="banner">
+  <div class="container">
+    <h1>Informasi Profil Kelurahan Munjul</h1>
+    <p>Transparansi layanan, data wilayah, kegiatan warga, dan potensi ekonomi lokal di Kelurahan Munjul, Kecamatan Majalengka, Kabupaten Majalengka.</p>
+
+    <form class="searchbar" role="search" aria-label="Cari konten" onsubmit="event.preventDefault();">
+      <input id="search" type="search" placeholder="Cari RW, UMKM, kegiatan dll" aria-label="Ketik kata kunci untuk mencari"/>
+      <button type="button" onclick="doSearch()">Cari</button>
+    </form>
+    <div class="hint">Gunakan kotak pencarian untuk memfilter isi di halaman ini secara langsung.</div>
+  </div>
+</header>
+
+<main id="main" class="container" tabindex="-1">
+
+  <!-- PROFIL -->
+  <section id="profil" aria-labelledby="t-profil">
+    <h2 class="title" id="t-profil">Profil Kelurahan</h2>
+    <p class="muted">Kelurahan Munjul memiliki 7 RW dengan keragaman potensi: pertanian padi–jagung–kacang/ketela, UMKM kuliner & olahan buah, hingga daya tarik wisata paralayang. Warga aktif bergotong royong dan rutin menjalankan <strong>GEBER (Gerakan Bersih)</strong> setiap Jumat pukul 06.00–07.00.</p>
+  </section>
+
+  <!-- DATA RW -->
+  <section id="rw" aria-labelledby="t-rw">
+    <h2 class="title" id="t-rw">Data Wilayah RW</h2>
+    <div class="grid cards" id="rwGrid" data-search-scope>
+      <article class="card rw" data-tags="rw1 alun alun padat seblak warung kos">
+        <h3>RW 1 — Area Alun-Alun & UMKM Kuliner</h3>
+        <p>Permukiman padat di depan alun-alun. Potensi: warung kelontong, kuliner seblak, dan kos-kosan.</p>
+        <span class="tag">UMKM & Hunian</span>
+      </article>
+      <article class="card rw" data-tags="rw2 umkm alfamart bolu mangga bengkel pedagang">
+        <h3>RW 2 — Sentra UMKM Lokal & Eksternal</h3>
+        <p>Warung & pedagang lokal berdampingan dengan usaha eksternal: Alfamart, Bolu Mangga, bengkel.</p>
+        <span class="tag">Pusat Perdagangan</span>
+      </article>
+      <article class="card rw" data-tags="rw3 sdn munjul puskesmas seni tari sayuran pendidikan kesehatan">
+        <h3>RW 3 — Pendidikan, Kesehatan & Seni</h3>
+        <p>SDN Munjul II, Puskesmas, toko sayur, serta pagelaran seni tari sebagai pelestarian budaya.</p>
+        <span class="tag">Layanan Publik</span>
+      </article>
+      <article class="card rw" data-tags="rw4 kelurahan tk budi asih masjid pertanian padi jagung kacang ketela sungai">
+        <h3>RW 4 — Jantung Pemerintahan & Pertanian</h3>
+        <p>Kantor kelurahan, TK Budi Asih II, masjid. Pertanian padi, jagung, kacang, ketela di bantaran sungai.</p>
+        <span class="tag">Pemerintahan</span>
+      </article>
+      <article class="card rw" data-tags="rw5 desa petani pertanian sawah agraris">
+        <h3>RW 5 — Desa Agraris</h3>
+        <p>Mayoritas warga bertani; potensi gotong royong, bank sampah organik, dan peningkatan produktivitas.</p>
+        <span class="tag">Pertanian</span>
+      </article>
+      <article class="card rw" data-tags="rw6 katel kedelai distribusi pasar bandar olahan tempe susu">
+        <h3>RW 6 — Sentra Katel (Kedelai)</h3>
+        <p>Petani katel/kedelai dengan jaringan distribusi ke pasar & bandar. Potensi olahan: tempe, susu kedelai.</p>
+        <span class="tag">Komoditas Unggulan</span>
+      </article>
+      <article class="card rw" data-tags="rw7 paralayang sawah sirkuit road race umkm dodol buah mangga pisang jambu majalengka mart">
+        <h3>RW 7 — Wisata & UMKM Olahan Buah</h3>
+        <p>Lokasi paralayang, persawahan, sirkuit road race. UMKM dodol mangga/pisang/jambu tersalur ke Majalengka Mart.</p>
+        <span class="tag">Wisata & UMKM</span>
+      </article>
+    </div>
+  </section>
+
+  <!-- KEGIATAN -->
+  <section id="kegiatan" aria-labelledby="t-keg">
+    <h2 class="title" id="t-keg">Kegiatan Warga</h2>
+    <div class="kp">
+      <article class="card" data-search-item data-tags="geber gerakan bersih jumat 06 07">
+        <h3>GEBER (Gerakan Bersih)</h3>
+        <p>Kegiatan rutin setiap Jumat pukul <strong>06.00–07.00</strong> melibatkan warga lintas RW untuk membersihkan lingkungan.</p>
+        <ul class="list">
+          <li>Fokus: jalan, selokan, fasilitas umum.</li>
+          <li>Kolaborasi perangkat RW/RT & komunitas pemuda.</li>
+          <li>Didukung edukasi PHBS & pengelolaan sampah.</li>
+        </ul>
+      </article>
+      <article class="card" data-search-item data-tags="pendidikan literasi bimbel sdn munjul ii">
+        <h3>Edukasi & Literasi</h3>
+        <p>Program bimbingan belajar & literasi di SDN Munjul II serta kampanye gizi seimbang dan cuci tangan pakai sabun.</p>
+      </article>
+      <article class="card" data-search-item data-tags="umkm pemasaran branding keuangan dodol bolu mangga">
+        <h3>Pemberdayaan UMKM</h3>
+        <p>Pelatihan pemasaran digital, label/kemasan, dan pencatatan keuangan sederhana untuk warung, dodol buah, dan Bolu Mangga.</p>
+      </article>
+    </div>
+  </section>
+
+  <!-- UMKM -->
+  <section id="umkm" aria-labelledby="t-umkm">
+    <h2 class="title" id="t-umkm">UMKM Unggulan</h2>
+    <div class="grid cards" id="umkmGrid" data-search-scope>
+      <article class="card" data-tags="dodol buah mangga pisang jambu majalengka mart">
+        <h3>Dodol Buah</h3>
+        <p>Olahan mangga, pisang, jambu. Distribusi sudah masuk <em>Majalengka Mart</em>.</p>
+      </article>
+      <article class="card" data-tags="bolu mangga oleh oleh">
+        <h3>Bolu Mangga</h3>
+        <p>Produk oleh-oleh populer, cocok untuk promosi kuliner daerah.</p>
+      </article>
+      <article class="card" data-tags="warung kuliner seblak kelontong">
+        <h3>Warung & Kuliner</h3>
+        <p>Warung kelontong dan kuliner (seblak) tersebar terutama di RW 1–2.</p>
+      </article>
+      <article class="card" data-tags="kedelai katel tempe susu">
+        <h3>Olahan Kedelai</h3>
+        <p>Potensi pengembangan tempe, tahu, dan susu kedelai berbasis sentra RW 6.</p>
+      </article>
+    </div>
+  </section>
+
+  <!-- KONTAK -->
+  <section id="kontak" aria-labelledby="t-kontak">
+    <h2 class="title" id="t-kontak">Kontak & Aspirasi</h2>
+    <div class="grid" style="grid-template-columns:2fr 1fr;gap:18px">
+      <div class="card">
+        <form aria-label="Form aspirasi warga" onsubmit="submitAspirasi(event)">
+          <div class="field">
+            <label for="f-nama">Nama</label>
+            <input id="f-nama" name="nama" required placeholder="Nama lengkap" />
+          </div>
+          <div class="field">
+            <label for="f-alamat">Alamat/ RW</label>
+            <input id="f-alamat" name="alamat" required placeholder="Contoh: RW 3, Blok ..." />
+          </div>
+          <div class="field">
+            <label for="f-isi">Aspirasi/ Pengaduan</label>
+            <textarea id="f-isi" name="isi" rows="4" required placeholder="Tuliskan saran atau pengaduan Anda"></textarea>
+          </div>
+          <button class="btn brand full" type="submit">Kirim Aspirasi</button>
+          <p class="muted" id="formMsg" role="status" aria-live="polite" style="margin:.5rem 0 0"></p>
+        </form>
+      </div>
+      <div class="card">
+        <h3>Kantor Kelurahan</h3>
+        <p class="muted">Kelurahan Munjul, Kecamatan Majalengka, Kabupaten Majalengka, Jawa Barat</p>
+        <ul class="list">
+          <li><strong>Kode Pos:</strong> 45417</li>
+          <li><strong>Email:</strong> kelurahanmunjul@.go.id</li>
+          <li><strong>Telepon:</strong> (0233) 28XXXX</li>
+        </ul>
+        <p class="muted">*Email/telepon dapat diperbarui saat konfirmasi resmi dengan kantor kelurahan.</p>
+      </div>
+    </div>
+  </section>
+
+</main>
+
+<footer>
+  <div class="container">
+    <p>© <span id="year"></span> Kelurahan Munjul – Majalengka • Dibangun untuk akses publik & keterbukaan informasi<p></p>
+        <p></p>(KKN-T 39 Munjul UGJ Cirebon).</p>
+  </div>
+</footer>
+
+<!-- MODALS -->
+<div class="modal" id="modal-login" aria-modal="true" role="dialog" aria-labelledby="loginTitle">
+  <div class="panel">
+    <button class="close" aria-label="Tutup" data-close>×</button>
+    <h3 id="loginTitle">Masuk Admin</h3>
+    <form onsubmit="event.preventDefault(); alert('Simulasi login admin. Integrasi bisa ditambahkan nanti.');">
+      <div class="field"><label for="u">Email</label><input id="u" type="email" required placeholder="admin@munjul.go.id"/></div>
+      <div class="field"><label for="p">Kata Sandi</label><input id="p" type="password" required placeholder="••••••••"/></div>
+      <button class="btn brand full" type="submit">Masuk</button>
+    </form>
+  </div>
+</div>
+
+<div class="modal" id="modal-daftar" aria-modal="true" role="dialog" aria-labelledby="daftarTitle">
+  <div class="panel">
+    <button class="close" aria-label="Tutup" data-close>×</button>
+    <h3 id="daftarTitle">Daftarkan UMKM Anda</h3>
+    <form onsubmit="event.preventDefault(); alert('Terima kasih! Data UMKM tersimpan secara lokal.');">
+      <div class="field"><label for="namaUmkm">Nama UMKM</label><input id="namaUmkm" required placeholder="Contoh: Dodol Jambu RW 7"/></div>
+      <div class="field"><label for="pemilik">Pemilik</label><input id="pemilik" required placeholder="Nama pemilik"/></div>
+      <div class="field"><label for="kontakUmkm">Kontak</label><input id="kontakUmkm" required placeholder="No. HP / WhatsApp"/></div>
+      <div class="field"><label for="descUmkm">Deskripsi Singkat</label><textarea id="descUmkm" rows="3" required placeholder="Produk, kapasitas, lokasi RW"></textarea></div>
+      <button class="btn brand full" type="submit">Kirim Pendaftaran</button>
+    </form>
+  </div>
+</div>
+
+<script>
+  // Tahun footer
+  document.getElementById('year').textContent = new Date().getFullYear();
+
+  // Smooth scroll + active link
+  const items = [...document.querySelectorAll('.nav a.item')];
+  items.forEach(a=>{
+    a.addEventListener('click', e=>{
+      e.preventDefault();
+      const el = document.querySelector(a.getAttribute('href'));
+      window.scrollTo({top: el.offsetTop-58, behavior:'smooth'});
+    });
+  });
+  const setActive=()=>{
+    const y=window.scrollY+70;
+    items.forEach(a=>{
+      const sec=document.querySelector(a.getAttribute('href'));
+      if(!sec) return;
+      if(y>=sec.offsetTop && y<sec.offsetTop+sec.offsetHeight){ a.classList.add('active'); }
+      else{ a.classList.remove('active'); }
+    });
+  };
+  addEventListener('scroll', setActive); setActive();
+
+  // Mobile menu
+  const hamb=document.getElementById('hamb');
+  const menu=document.getElementById('menu');
+  hamb?.addEventListener('click',()=>{ 
+    menu.style.display = menu.style.display==='flex' ? 'none' : 'flex';
+    menu.style.flexDirection='column'; menu.style.gap='8px';
+    menu.style.position='absolute'; menu.style.top='64px'; menu.style.right='12px';
+    menu.style.background='#0f1116'; menu.style.padding='10px 12px'; menu.style.border='1px solid #23262e'; menu.style.borderRadius='12px';
+  });
+
+  // Modals
+  const openBtns=document.querySelectorAll('[data-open]');
+  const closeBtns=document.querySelectorAll('[data-close]');
+  const modals={ login:document.getElementById('modal-login'), daftar:document.getElementById('modal-daftar') };
+  openBtns.forEach(b=>b.addEventListener('click',()=>{ modals[b.dataset.open]?.classList.add('open'); }));
+  closeBtns.forEach(b=>b.addEventListener('click',()=>{ b.closest('.modal')?.classList.remove('open'); }));
+  document.querySelectorAll('.modal').forEach(m=>m.addEventListener('click',e=>{ if(e.target===m) m.classList.remove('open'); }));
+
+  // Client-side search across sections with data-search-scope
+  function normalize(s){ return s.toLowerCase().normalize('NFD').replace(/\p{Diacritic}/gu,''); }
+  window.doSearch=function(){
+    const q = normalize(document.getElementById('search').value.trim());
+    document.querySelectorAll('[data-search-scope] > *,[data-search-item]').forEach(el=>{
+      if(!q){ el.style.display=''; return; }
+      const tags=(el.dataset.tags||el.textContent).toLowerCase();
+      el.style.display = tags.includes(q) ? '' : 'none';
+    });
+    // scroll ke RW jika ada hasil di sana
+    const firstMatch = [...document.querySelectorAll('[data-search-scope] > *,[data-search-item]')].find(el=>el.style.display!=='none');
+    if(firstMatch){ firstMatch.scrollIntoView({behavior:'smooth',block:'center'}); }
+  }
+
+  // Form Aspirasi (simulasi simpan lokal)
+  function submitAspirasi(e){
+    e.preventDefault();
+    const data={
+      nama:document.getElementById('f-nama').value.trim(),
+      alamat:document.getElementById('f-alamat').value.trim(),
+      isi:document.getElementById('f-isi').value.trim(),
+      t:new Date().toISOString()
+    };
+    const all=JSON.parse(localStorage.getItem('aspirasi-munjul')||'[]');
+    all.push(data);
+    localStorage.setItem('aspirasi-munjul',JSON.stringify(all));
+    document.getElementById('formMsg').textContent="Terima kasih. Aspirasi Anda tersimpan (lokal).";
+    e.target.reset();
+  }
+</script>
+</body>
+</html>
